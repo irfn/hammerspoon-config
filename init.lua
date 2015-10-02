@@ -14,6 +14,7 @@ hs.window.animationDuration = 0
 local ctrl_alt   = {"ctrl", "alt"}
 local mash   = {"cmd", "alt", "ctrl"}
 local ctrl_alt_shift = {"ctrl", "alt", "shift"}
+local hyper = {"shift", "cmd", "alt", "ctrl"}
 
 --------------------------------------------------------------------------------
 
@@ -28,7 +29,90 @@ local function launchOrFocus (app)
     return function () hs.application.launchOrFocus(app) end
 end
 
+hs.hotkey.bind(mash, "r", hs.reload)
 
+
+local function tile(sizeFrame)
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+    sizeFrame(f, max)
+    win:setFrame(f)
+end
+
+hs.hotkey.bind(mash, "left", function()
+  return tile(function(f, max)
+      f.x = max.x
+      f.y = max.y
+      f.w = max.w/2
+      f.h = max.h
+  end)
+end)
+
+hs.hotkey.bind(mash, "right", function()
+    return tile(function(f, max)
+        f.x = max.x + (max.w/2)
+        f.y = max.y
+        f.w = max.w/2
+        f.h = max.h
+    end)
+end)
+
+hs.hotkey.bind(mash, "up", function()
+    return tile(function(f, max)
+        f.x = max.x
+        f.y = max.y
+        f.w = max.w
+        f.h = max.h/2
+    end)
+end)
+
+hs.hotkey.bind(mash, "down", function()
+    return tile(function(f, max)
+        f.x = max.x
+        f.y = max.y + max.h/2
+        f.w = max.w
+        f.h = max.h/2
+    end)
+end)
+
+hs.hotkey.bind(mash, "1", function()
+  return tile(function(f, max)
+      f.x = max.x
+      f.y = max.y
+      f.w = max.w/2
+      f.h = max.h/2
+  end)
+end)
+
+hs.hotkey.bind(mash, "2", function() 
+    return tile(function(f, max)
+        f.x = max.x + (max.w/2)
+        f.y = max.y
+        f.w = max.w/2
+        f.h = max.h/2
+    end)
+end)
+
+hs.hotkey.bind(mash, "3", function() 
+    return tile(function(f, max)
+        f.x = max.x
+        f.y = max.y + max.h/2
+        f.w = max.w/2
+        f.h = max.h/2
+    end)
+end)
+
+hs.hotkey.bind(mash, "4", function() 
+    return tile(function(f, max)
+        f.x = max.x + max.w/2
+        f.y = max.y + max.h/2
+        f.w = max.w/2
+        f.h = max.h/2
+    end)
+end)
+ 
 -- Launch applications
 hs.hotkey.bind(mash, 'D', launchOrFocus("Dictionary"))
 hs.hotkey.bind(mash, 't', launchOrFocus("iterm"))
@@ -62,10 +146,10 @@ hs.hotkey.bind(ctrl_alt, 'right', hs.grid.pushWindowNextScreen)
 hs.hotkey.bind(ctrl_alt, 'left', hs.grid.pushWindowPrevScreen)
 
 -- move windows
-hs.hotkey.bind(mash, 'left', hs.grid.pushWindowLeft)
-hs.hotkey.bind(mash, 'down', hs.grid.pushWindowDown)
-hs.hotkey.bind(mash, 'up', hs.grid.pushWindowUp)
-hs.hotkey.bind(mash, 'right', hs.grid.pushWindowRight)
+hs.hotkey.bind(hyper, 'left', hs.grid.pushWindowLeft)
+hs.hotkey.bind(hyper, 'down', hs.grid.pushWindowDown)
+hs.hotkey.bind(hyper, 'up', hs.grid.pushWindowUp)
+hs.hotkey.bind(hyper, 'right', hs.grid.pushWindowRight)
 
 -- resize windows
 hs.hotkey.bind(ctrl_alt, 'Y', hs.grid.resizeWindowThinner)
