@@ -21,7 +21,7 @@ local hyper = {"shift", "cmd", "alt", "ctrl"}
 -- application help
 local function open_help()
   help_str = "d - Dictionary, 1 - Terminal, 2 - Pathfinder, " ..
-            "3 - Chrome, 4 - Dash, 5 - Trello, 6 - Quiver"        
+            "3 - Chrome, 4 - Dash, 5 - Trello, 6 - Quiver"
   hs.alert.show(
    help_str, 2)
 end
@@ -40,6 +40,15 @@ local function tile(sizeFrame)
     sizeFrame(f, max)
     win:setFrame(f)
 end
+
+hs.hotkey.bind(mash, "\\", function()
+    return tile(function(f, max)
+          f.x = max.x
+          f.y = max.y
+          f.w = max.w
+          f.h = max.h
+    end)
+end)
 
 hs.hotkey.bind(mash, "left", function()
   return tile(function(f, max)
@@ -86,7 +95,7 @@ hs.hotkey.bind(mash, "1", function()
   end)
 end)
 
-hs.hotkey.bind(mash, "2", function() 
+hs.hotkey.bind(mash, "2", function()
     return tile(function(f, max)
         f.x = max.x + (max.w/2)
         f.y = max.y
@@ -95,7 +104,7 @@ hs.hotkey.bind(mash, "2", function()
     end)
 end)
 
-hs.hotkey.bind(mash, "3", function() 
+hs.hotkey.bind(mash, "3", function()
     return tile(function(f, max)
         f.x = max.x
         f.y = max.y + max.h/2
@@ -104,7 +113,7 @@ hs.hotkey.bind(mash, "3", function()
     end)
 end)
 
-hs.hotkey.bind(mash, "4", function() 
+hs.hotkey.bind(mash, "4", function()
     return tile(function(f, max)
         f.x = max.x + max.w/2
         f.y = max.y + max.h/2
@@ -112,7 +121,7 @@ hs.hotkey.bind(mash, "4", function()
         f.h = max.h/2
     end)
 end)
- 
+
 -- Launch applications
 hs.hotkey.bind(mash, 'D', launchOrFocus("Dictionary"))
 hs.hotkey.bind(mash, 't', launchOrFocus("iterm"))
@@ -159,4 +168,3 @@ hs.hotkey.bind(ctrl_alt, 'O', hs.grid.resizeWindowWider)
 
 -- Window Hints
 hs.hotkey.bind(ctrl_alt, '.', hs.hints.windowHints)
-
